@@ -4,6 +4,7 @@ import java.util.Calendar;
  * Week3Program: Solves problems in RadioCarbon Dating
  *
  * @author Josh Fernandez
+ *         CS1131, R01
  */
 public class Week3Program {
 

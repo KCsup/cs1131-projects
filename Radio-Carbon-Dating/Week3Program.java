@@ -16,10 +16,10 @@ public class Week3Program {
      * @param age - the age of an artifact in years
      * @return the percent of C14 remaining in the artifact
      */
-    double radiocarbonPercent(int age) {
+    double radiocarbonPercent ( int age ) {
         // Rounding the output to 2 decimal places for proper percentage parsing
         // See method definition below.
-        return roundToN(Math.pow(0.5, age / C_14_HALF_LIFE), 2);
+        return roundToN( Math.pow( 0.5, age / C_14_HALF_LIFE ), 2 );
     }
 
     /**
@@ -29,8 +29,8 @@ public class Week3Program {
      * @param p - the percentage of C14 remaining in an artifact
      * @return the age of the artifact in years
      */
-    int radiocarbonAge(double p) {
-        return (int) ((Math.log(p) / Math.log(0.5)) * C_14_HALF_LIFE);
+    int radiocarbonAge ( double p ) {
+        return ( int ) ( (Math.log( p ) / Math.log( 0.5 ) ) * C_14_HALF_LIFE );
     }
 
     /**
@@ -40,8 +40,8 @@ public class Week3Program {
      * @param p the percentage of C14
      * @return The date is the current year minus the age of the artifact.
      */
-    int radiocarbonDate(double p) {
-        return Calendar.getInstance().getWeekYear() - radiocarbonAge(p);
+    int radiocarbonDate ( double p ) {
+        return Calendar.getInstance().getWeekYear() - radiocarbonAge( p );
     }
 
     /**
@@ -50,14 +50,14 @@ public class Week3Program {
     * @param decimalPlaces The number of decimal places to round to. Ex. 2 will round the hundreths place.
     * @return The input double rounded to N decimal places.
     */
-    double roundToN(double input, int decimalPlaces) {
-        double place = Math.pow(10, decimalPlaces);
+    double roundToN ( double input, int decimalPlaces ) {
+        double place = Math.pow( 10, decimalPlaces );
         // Rounds to an int, then converts back to a double based on the rounding place.
-        return Math.round(input * place) / place;
+        return Math.round( input * place ) / place;
     }
 
     // Test code
-    public static void main(String [] args) {
+    public static void main ( String [ ] args ) {
         Week3Program self = new Week3Program( );
 
         System.out.println( "Test radiocarbonPercent( age )." );

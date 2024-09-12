@@ -8,20 +8,18 @@ import java.util.Calendar;
  */
 public class Week3Program {
 
+    final double C_14_HALF_LIFE = 5730d;
+    
     /**
      * Given the age of an artifact in years, return the percent of C14 left in it. Here a percentage is a
      * double in the range [0.0, 1.0]. Remember that N / N0 is the percent of C14 remaining in the object.
      * @param age - the age of an artifact in years
      * @return the percent of C14 remaining in the artifact
      */
-
-    final double C_14_HALF_LIFE = 5730d;
-    final double LAMBDA = Math.log(2) / C_14_HALF_LIFE;
-    
     double radiocarbonPercent(int age) {
         // Rounding the output to 2 decimal places for proper percentage parsing
         // See method definition below.
-        return roundToN(Math.exp(-1d * LAMBDA * ((double) age)), 2);
+        return roundToN(Math.pow(0.5, age / C_14_HALF_LIFE), 2);
     }
 
     /**
@@ -31,8 +29,8 @@ public class Week3Program {
      * @param p - the percentage of C14 remaining in an artifact
      * @return the age of the artifact in years
      */
-    int radiocarbonAge (double p) {
-        return (int) (Math.log(p) / (-1d * LAMBDA));
+    int radiocarbonAge(double p) {
+        return (int) ((Math.log(p) / Math.log(0.5)) * C_14_HALF_LIFE);
     }
 
     /**

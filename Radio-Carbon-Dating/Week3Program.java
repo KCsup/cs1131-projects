@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 
 /**
@@ -30,7 +32,7 @@ public class Week3Program {
      * @return the age of the artifact in years
      */
     int radiocarbonAge ( double p ) {
-        return ( int ) ( (Math.log( p ) / Math.log( 0.5 ) ) * C_14_HALF_LIFE );
+        return (int) ( ( Math.log( p ) / Math.log( 0.5 ) ) * C_14_HALF_LIFE );
     }
 
     /**
@@ -41,7 +43,8 @@ public class Week3Program {
      * @return The date is the current year minus the age of the artifact.
      */
     int radiocarbonDate ( double p ) {
-        return Calendar.getInstance().getWeekYear() - radiocarbonAge( p );
+        return Calendar
+            .getInstance().get( Calendar.YEAR ) - radiocarbonAge( p );
     }
 
     /**
@@ -51,9 +54,8 @@ public class Week3Program {
     * @return The input double rounded to N decimal places.
     */
     double roundToN ( double input, int decimalPlaces ) {
-        double place = Math.pow( 10, decimalPlaces );
-        // Rounds to an int, then converts back to a double based on the rounding place.
-        return Math.round( input * place ) / place;
+        return BigDecimal
+            .valueOf( input ).setScale( 2, RoundingMode.HALF_UP ).doubleValue();
     }
 
     // Test code

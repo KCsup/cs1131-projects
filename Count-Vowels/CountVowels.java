@@ -31,10 +31,10 @@ public class CountVowels {
     }
 
     public static int consonantCount( String str ) {
-        int letterCount = 0;
+        int count = 0;
         for ( char c : str.toLowerCase().toCharArray() )
-            if ( Character.isLetter(c) ) letterCount++;
+            if ( VOWELS.indexOf( c ) == -1 ) count++;
 
-        return letterCount - vowelCount(str); 
+        return count; 
     }
 }

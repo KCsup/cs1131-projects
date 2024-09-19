@@ -38,15 +38,13 @@ public class IceCream {
                     }
                 }
                 
-                System.out.println(
-                    String.format(
-                        "%d %s$%s",
-                        count,
-                        menuItem,
-                        moneyFormat.format( BigDecimal.valueOf( cost )
-                            .setScale( 2, RoundingMode.HALF_UP )
-                            .doubleValue( ) )
-                    )
+                System.out.printf(
+                    "%02d %s$%.2f\n",
+                    count,
+                    menuItem,
+                    BigDecimal.valueOf( cost )
+                        .setScale( 2, RoundingMode.HALF_UP )
+                        .doubleValue( )
                 );
                 count += 1;
             }

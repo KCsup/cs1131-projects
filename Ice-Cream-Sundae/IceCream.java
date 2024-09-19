@@ -1,6 +1,5 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class IceCream {
@@ -20,7 +19,6 @@ public class IceCream {
     
     // returns the number of combinations
     public long printMenu( ) {
-        DecimalFormat moneyFormat = new DecimalFormat( "0.00" );
         long count = 0;
 
         for ( String flavor : FLAVORS.keySet( ) ) {

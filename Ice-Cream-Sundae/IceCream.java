@@ -37,7 +37,7 @@ public class IceCream {
                 }
                 
                 System.out.printf(
-                    "%02d %s$%.2f\n",
+                    "%02d %-60s$%.2f\n",
                     count,
                     menuItem,
                     BigDecimal.valueOf( cost )

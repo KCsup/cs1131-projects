@@ -2,6 +2,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
 
+/**
+ * Week3Program: Solves problems in RadioCarbon Dating
+ *
+ * @author Josh Fernandez
+ *         CS1131, R01
+ */
 public class IceCream {
 
     final HashMap< String, Double > FLAVORS = new HashMap< >( ) {{

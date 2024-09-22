@@ -3,7 +3,7 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 
 /**
- * Week3Program: Solves problems in RadioCarbon Dating
+ * Week 4: Ice Cream Sundae In-Class Program
  *
  * @author Josh Fernandez
  *         CS1131, R01

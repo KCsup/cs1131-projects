@@ -4,10 +4,10 @@ import java.util.Random;
 
 public class PirateTranslator {
 
-    static final String END_OF_SENTENCE = ".!?";
-    static final String PUNCTUATION = ",;:" + END_OF_SENTENCE;
+    final String END_OF_SENTENCE = ".!?";
+    final String PUNCTUATION = ",;:" + END_OF_SENTENCE;
     
-    static final HashMap< List< String >, String > PIRATE_TRANSLATIONS = 
+    final HashMap< List< String >, String > PIRATE_TRANSLATIONS = 
         new HashMap< >( ) {{
             put( List.of ( "hello" ), "ahoy" );
             put( List.of( "hi" ), "yo-ho-ho" );
@@ -21,7 +21,7 @@ public class PirateTranslator {
             put( List.of( "is", "are", "am" ), "be" );
         }};
 
-    public static String convertToPirateSpeak( String sentence ) {
+    public String convertToPirateSpeak( String sentence ) {
         String[ ] loweredSentence = sentence.toLowerCase( ).split( " " );
 
         final String[ ] sentenceArray = sentence.split( " " );
@@ -77,7 +77,9 @@ public class PirateTranslator {
     }
     
     public static void main( String[ ] args ) {
-        String[] sentences = {
+        PirateTranslator pirateTranslator = new PirateTranslator( );
+        
+        String[ ] sentences = {
             "Hi, my friend, hello. How are you?",
             "I asked the officer: \"Do you know, sir, " +
                 "where my miss has gone?\"",
@@ -91,7 +93,7 @@ public class PirateTranslator {
                 i + 1,
                 sentence,
                 i + 1,
-                convertToPirateSpeak( sentence )
+                pirateTranslator.convertToPirateSpeak( sentence )
             );
         }
     }

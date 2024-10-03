@@ -70,7 +70,7 @@ public class PirateTranslator {
                     random.nextInt( 2 ) == 1 ) output.append( " ARRR" );
                 output.append( lastChar );
             }
-            output.append( " " );
+            if(i != loweredSentence.length - 1) output.append( " " );
         }
 
         return output.toString( );
@@ -84,7 +84,9 @@ public class PirateTranslator {
             "I asked the officer: \"Do you know, sir, " +
                 "where my miss has gone?\"",
             "He said, \"Yes. I am sorry, but she is over there with" +
-                " strangers, and she is sick with the dreaded flu.\""
+                " strangers, and she is sick with the dreaded flu.\"",
+            // "stranger",
+            // "stranger"
         };
         for ( int i = 0; i < sentences.length; i++ ) {
             String sentence = sentences[ i ];
@@ -96,5 +98,9 @@ public class PirateTranslator {
                 pirateTranslator.convertToPirateSpeak( sentence )
             );
         }
+
+        // System.out.println(pirateTranslator.convertToPirateSpeak("stranger"));
+
+        // System.out.println(pirateTranslator.convertToPirateSpeak("stranger").equals("scurvy dog"));
     }
 }

@@ -94,6 +94,32 @@ public class Cipher {
         );
     }
 
+    /**
+    * DEAD CODE. Returns the cipher table based on the Cipher instance's
+    * defined encoding code.
+    *
+    * @return The cipher table for the Cipher instance.
+    */
+    public char [ ] [ ] getCipherTable( ) {
+        char [ ] [ ] out = new char [ 
+                KEY_LIST.length( ) 
+            ] [ 
+                KEY_LIST.length( ) 
+            ];
+        
+        for ( int i = 0; i < KEY_LIST.length( ); i++ )
+            out [ i ] = getCipherRow( KEY_LIST.charAt( i ) );
+
+        return out;
+    }
+
+    /**
+    * DEAD CODE. Returns a char array of the alphabet.
+    *
+    * @return The alphabet as a char array.
+    */
+    public char [ ] getKeyList( ) { return KEY_LIST.toCharArray( ); }
+
     // METHODS
     /**
     * Encrypts a given string based on the cipher table of the Cipher instance.
@@ -145,9 +171,9 @@ public class Cipher {
     * @param args The array of arguments supplied to the java program.
     */
     public static void main( String[ ] args ) {      
-      // Testing only works if using VM argument: java -ea Cipher
-      Cipher self = new Cipher( 'H', "BABBAGE" );
-      assert "PHXXF MQYBPKNJ".equals( self.encode( "HAPPY BIRTHDAY" ) );
-      assert "HAPPY BIRTHDAY".equals( self.decode( "PHXXF MQYBPKNJ" ) );
+        // Testing only works if using VM argument: java -ea Cipher
+        Cipher self = new Cipher( 'H', "BABBAGE" );
+        assert "PHXXF MQYBPKNJ".equals( self.encode( "HAPPY BIRTHDAY" ) );
+        assert "HAPPY BIRTHDAY".equals( self.decode( "PHXXF MQYBPKNJ" ) );
     }
 } // END OF CLASS --------------------------------------------------------

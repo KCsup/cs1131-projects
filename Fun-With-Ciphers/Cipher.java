@@ -114,11 +114,11 @@ public class Cipher {
     }
 
     /**
-    * DEAD CODE. Returns a char array of the alphabet.
+    * DEAD CODE. Returns a char array of the cipher's key.
     *
-    * @return The alphabet as a char array.
+    * @return The cipher key as a char array.
     */
-    public char [ ] getKeyList( ) { return KEY_LIST.toCharArray( ); }
+    public char [ ] getKeyList( ) { return this.key.toCharArray( ); }
 
     // METHODS
     /**

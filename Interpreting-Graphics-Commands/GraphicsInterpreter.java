@@ -5,9 +5,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
+
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,10 +39,11 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
         Pane root = (Pane) stage.getScene().getRoot();
         List<Command> commands = new ArrayList<Command>();
 
-        Files.lines(Paths.get(filename)).forEach(line -> {
+        List<String> lines = Files.readAllLines(Paths.get(filename));
+        for(String line : lines) {
             String[] splitLine = line.split(" ");
 
-            if(splitLine.length < 1) return;
+            if(splitLine.length < 1) break;
             
             String command = splitLine[0];
             String[] args = new String[splitLine.length - 1];
@@ -67,11 +75,14 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
                 default:
                     break;
             }
-        });
+        }
 
         for(Command command : commands) command.execute();
-        
-        return null;
+
+        WritableImage outImg = new WritableImage((int) stage.getWidth(), (int) stage.getHeight());
+        stage.getScene().snapshot(outImg);
+
+        return outImg;
     }
 
     @Override
@@ -80,16 +91,12 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
         String filename
     ) throws FileNotFoundException, IOException {
         
+        File outputFile = Paths.get(filename).toFile();
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", outputFile);
+        System.out.println("Image written to " + filename);
     }
 
     public static void main(String[] args) {
-        // List<Command> commands = new ArrayList<Command>() {{
-        //     add(new SizeCommand(new String[]{"test", "arg2"}));
-        // }};
-
-        
-        // for(Command c : commands) c.execute();
-
         launch(args);
     }
 }

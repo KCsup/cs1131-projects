@@ -34,18 +34,9 @@ public abstract class Command {
     public int getIntegerArg(int index) {
         return Integer.valueOf(args[index]);
     }
-
+    
     public double getDoubleArg(int index) {
         return Double.valueOf(args[index]);
-    }
-
-    public int[] getIntegerArgs() {
-        int[] out = new int[args.length];
-        
-        for(int i = 0; i < args.length; i++)
-            out[i] = getIntegerArg(i);
-
-        return out;
     }
 
     public double[] getDoubleArgs() {

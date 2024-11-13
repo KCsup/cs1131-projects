@@ -17,7 +17,7 @@ public class LineCommand extends Command {
 
     @Override
     public void execute() {
-        int[] args = getIntegerArgs();
+        double[] args = getDoubleArgs();
         GraphicsInterpreter interpreter = getInterpreter();
         
         Line line = new Line(args[0], args[1], args[2], args[3]);

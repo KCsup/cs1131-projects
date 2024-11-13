@@ -17,7 +17,7 @@ public class CircleCommand extends Command {
 
     @Override
     public void execute() {
-        int[] args = getIntegerArgs();
+        double[] args = getDoubleArgs();
         GraphicsInterpreter interpreter = getInterpreter();
         
         Circle circle = new Circle(args[0], args[1], args[2]);

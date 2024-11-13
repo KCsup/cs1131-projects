@@ -16,7 +16,7 @@ public class SizeCommand extends Command {
     
     @Override
     public void execute() {
-        int[] args = getIntegerArgs();
+        double[] args = getDoubleArgs();
         stage.setWidth(args[0]);
         stage.setHeight(args[1]);
     }

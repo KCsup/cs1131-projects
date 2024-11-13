@@ -40,6 +40,8 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
         List<Command> commands = new ArrayList<Command>();
 
         List<String> lines = Files.readAllLines(Paths.get(filename));
+
+        commandLines:
         for(String line : lines) {
             String[] splitLine = line.split(" ");
 
@@ -72,6 +74,8 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
                 case "STROKE":
                     commands.add(new ColorCommand(this, args, command));
                     break;
+                case "END":
+                    break commandLines;
                 default:
                     break;
             }

@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
-
-import java.awt.image.BufferedImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 
 import javax.imageio.ImageIO;
 
@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import javax.naming.NamingException;
+import java.text.ParseException;
 
 public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
 
@@ -35,14 +38,47 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
     public WritableImage loadCommandFile(
         Stage stage,
         String filename
-    ) throws FileNotFoundException, IOException {
+    ) throws FileNotFoundException, Exception {
         Pane root = (Pane) stage.getScene().getRoot();
-        List<Command> commands = new ArrayList<Command>();
+        root.setBackground(new Background(new BackgroundFill(
+            Color.WHITE, null, null
+        )));
+        
 
         List<String> lines = Files.readAllLines(Paths.get(filename));
+        List<Command> commands = getCommands(lines, stage);
 
+
+        for(int i = 0; i < commands.size(); i++) {
+            Command command = commands.get(i);
+            try {
+                command.execute();
+            }
+            catch(NumberFormatException e) {
+                throw new ParseException("Unable to parse arguments for " +
+                    "command " + (i + 1) + ".", 0);
+            }
+        }
+
+        WritableImage outImg = new WritableImage(
+            (int) stage.getWidth(),
+            (int) stage.getHeight()
+        );
+        stage.getScene().snapshot(outImg);
+
+        return outImg;
+    }
+
+    public List<Command> getCommands(
+        List<String> lines,
+        Stage stage
+    ) throws ParseException {
+        List<Command> commands = new ArrayList<Command>();
+        Pane root = (Pane) stage.getScene().getRoot();
+        
         commandLines:
-        for(String line : lines) {
+        for(int lineI = 0; lineI < lines.size(); lineI++) {
+            String line = lines.get(lineI);
             String[] splitLine = line.split(" ");
 
             if(splitLine.length < 1) break;
@@ -51,42 +87,49 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
             String[] args = new String[splitLine.length - 1];
             System.arraycopy(splitLine, 1, args, 0, args.length);
             
-            switch(command) {
-                case "SIZE":
-                    commands.add(new SizeCommand(this, args, stage));
-                    break;
-                case "LINE":
-                    commands.add(new LineCommand(this, args, root));
-                    break;
-                case "CIRCLE":
-                    commands.add(new CircleCommand(this, args, root));
-                    break;
-                case "RECTANGLE":
-                    commands.add(new RectangleCommand(this, args, root));
-                    break;
-                case "POLYGON":
-                    commands.add(new PolygonCommand(this, args, root));
-                    break;
-                case "TEXT":
-                    commands.add(new TextCommand(this, args, root));
-                    break;
-                case "FILL":
-                case "STROKE":
-                    commands.add(new ColorCommand(this, args, command));
-                    break;
-                case "END":
-                    break commandLines;
-                default:
-                    break;
+            try {
+                switch(command) {
+                    case "SIZE":
+                        commands.add(new SizeCommand(this, args, stage));
+                        break;
+                    case "LINE":
+                        commands.add(new LineCommand(this, args, root));
+                        break;
+                    case "CIRCLE":
+                        commands.add(new CircleCommand(this, args, root));
+                        break;
+                    case "RECTANGLE":
+                        commands.add(new RectangleCommand(this, args, root));
+                        break;
+                    case "POLYGON":
+                        commands.add(new PolygonCommand(this, args, root));
+                        break;
+                    case "TEXT":
+                        commands.add(new TextCommand(this, args, root));
+                        break;
+                    case "FILL":
+                    case "STROKE":
+                        commands.add(new ColorCommand(this, args, command));
+                        break;
+                    case "END":
+                        break commandLines;
+                    case "":
+                    case "//":
+                        break;
+                    default:
+                        throw new NamingException(command);
+                }
+            } catch(IllegalArgumentException e) {
+                throw new ParseException("Invalid Arguments supplied" + 
+                    " to command at line " + (lineI + 1) + ".", 0);
+            } catch(NamingException e) {
+                throw new ParseException("Invalid Command '" +
+                    e.getExplanation() + "' at line " +
+                    (lineI + 1) + " while parsing file.", 0);
             }
         }
 
-        for(Command command : commands) command.execute();
-
-        WritableImage outImg = new WritableImage((int) stage.getWidth(), (int) stage.getHeight());
-        stage.getScene().snapshot(outImg);
-
-        return outImg;
+        return commands;
     }
 
     @Override
@@ -94,9 +137,10 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
         WritableImage image,
         String filename
     ) throws FileNotFoundException, IOException {
-        
         File outputFile = Paths.get(filename).toFile();
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", outputFile);
+        ImageIO.write(SwingFXUtils.fromFXImage(
+            image, null
+        ), "png", outputFile);
         System.out.println("Image written to " + filename);
     }
 

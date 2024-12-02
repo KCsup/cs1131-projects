@@ -13,6 +13,15 @@ public abstract class Command {
     ) throws IllegalArgumentException {
         if(args.length < minArgs) throw new IllegalArgumentException();
 
+        for(int i = 0; i < args.length; i++) {
+            if(!args[i].startsWith("$")) continue;
+
+            String varName = args[i].substring(1);
+            String variable = interpreter.extraCredit.getVariable(varName);
+            if(variable != null)
+                args[i] = variable;
+        }
+
         this.interpreter = interpreter;
         this.args = args;
         this.minArgs = minArgs;

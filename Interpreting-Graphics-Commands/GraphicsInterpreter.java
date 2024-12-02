@@ -1,3 +1,16 @@
+/**
+ * Week 11: Graphics Interpreter Program
+ * This program parses graphics commands in a text file, and outputs
+ * the commands as a PNG image.
+ *
+ * Date Last Modified: 11/15/2024
+ *
+ * @author Josh Fernandez
+ *
+ * CS1131, Fall 2024
+ * Lab Section 3
+ */
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.WritableImage;
@@ -33,6 +46,8 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
     public void setStroke(Color color) { stroke = color; }
     public Color getFill() { return fill; }
     public Color getStroke() { return stroke; }
+
+    public Week9ExtraCredit extraCredit = new Week9ExtraCredit();
     
     @Override
     public WritableImage loadCommandFile(
@@ -115,6 +130,9 @@ public class GraphicsInterpreter extends AbstractGraphicsInterpreter {
                         break commandLines;
                     case "":
                     case "//":
+                        break;
+                    case "SET":
+                        commands.add(new SetCommand(this, args));
                         break;
                     default:
                         throw new NamingException(command);
